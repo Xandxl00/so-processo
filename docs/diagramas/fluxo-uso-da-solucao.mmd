@@ -1,0 +1,18 @@
+flowchart TD
+    A([1. Abrir o Só Processo no navegador]) --> B{Primeira vez?}
+    B -- Sim --> C[Carregar exemplos ou<br>começar do zero]
+    B -- Não --> D
+    C --> D[2. Ver as tarefas agrupadas:<br>Atrasadas, Hoje, Amanhã...]
+    D --> E[3. Cadastrar tarefa: adição rápida<br>ou formulário completo]
+    E --> F{Título preenchido?}
+    F -- Não --> G[Aviso: Informe o título da tarefa]
+    G --> E
+    F -- Sim --> H[Tarefa salva no navegador]
+    H --> I[4. Organizar: filtrar, buscar, ordenar<br>ou usar Quadro e Calendário]
+    I --> J[5. Trabalhar: mover para Em andamento<br>e usar o modo foco]
+    J --> K[6. Concluir a tarefa]
+    K --> L[Painel de progresso atualiza]
+    L --> M{Mais tarefas?}
+    M -- Sim --> D
+    M -- Não --> N[7. Exportar backup em JSON<br>de vez em quando]
+    N --> O([Fim do dia])

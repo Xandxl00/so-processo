@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Só Processo</title>
+  <meta name="description" content="Organização de tarefas diárias: prazos, prioridades, categorias, subtarefas, calendário e modo foco.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="papel-de-parede" id="papel-de-parede" aria-hidden="true"></div>
+  <div class="app">
+    <aside class="lateral" id="lateral" aria-label="Menu">
+      <div class="marca">
+        <span class="logo" data-icone="check"></span>
+        <span>Só Processo</span>
+      </div>
+
+      <button type="button" class="botao primario largo" id="botao-nova" data-icone="mais">
+        Nova tarefa <kbd>N</kbd>
+      </button>
+
+      <nav aria-label="Visões">
+        <ul class="menu" id="menu-visoes"></ul>
+      </nav>
+
+      <div class="secao-lateral">
+        <div class="titulo-secao">
+          <span>Categorias</span>
+          <button type="button" class="botao-icone" id="botao-nova-categoria" aria-label="Nova categoria" title="Nova categoria" data-icone="mais"></button>
+        </div>
+        <ul class="menu" id="menu-categorias"></ul>
+      </div>
+
+      <div class="rodape-lateral">
+        <a class="link-menu" href="site/index.html" data-icone="info">Sobre o projeto</a>
+        <button type="button" class="link-menu" id="botao-fundo" data-icone="imagem">Personalizar fundo</button>
+        <button type="button" class="link-menu" id="botao-tema"></button>
+        <button type="button" class="link-menu" id="botao-exportar" data-icone="baixar">Exportar backup</button>
+        <button type="button" class="link-menu" id="botao-importar" data-icone="enviar">Importar backup</button>
+        <input type="file" id="arquivo-importar" accept="application/json,.json" hidden>
+        <p class="creditos">Projeto A3 · Projeto e Engenharia de Software</p>
+      </div>
+    </aside>
+    <div class="fundo-menu" id="fundo-menu" hidden></div>
+
+    <main class="principal">
+      <header class="topo">
+        <button type="button" class="botao-icone botao-menu" id="botao-menu" aria-label="Abrir menu" data-icone="menu"></button>
+        <div class="titulos">
+          <p class="saudacao" id="saudacao"></p>
+          <h1 id="titulo-visao">Todas as tarefas</h1>
+          <p class="frase" id="frase-resumo"></p>
+        </div>
+      </header>
+
+      <section class="resumo" id="resumo" aria-label="Resumo"></section>
+
+      <form class="adicao-rapida" id="form-rapido">
+        <span class="icone-campo" data-icone="mais"></span>
+        <input id="campo-rapido" type="text" maxlength="160" autocomplete="off"
+               placeholder="Adicionar tarefa rápida… (Enter pra salvar)" aria-label="Adicionar tarefa rápida">
+        <button type="submit" class="botao primario">Adicionar</button>
+      </form>
+      <p class="dica">
+        Dica: <code>@hoje</code>, <code>@amanhã</code> ou <code>@25/12</code> definem o prazo,
+        <code>!alta</code> a prioridade e <code>#faculdade</code> a categoria.
+      </p>
+
+      <div class="ferramentas">
+        <label class="busca">
+          <span class="icone-campo" data-icone="busca"></span>
+          <input id="campo-busca" type="search" placeholder="Buscar tarefas   ( / )" aria-label="Buscar tarefas">
+        </label>
+        <div class="segmentado" id="filtro-status" role="group" aria-label="Filtrar por status">
+          <button type="button" data-status="todas">Todas</button>
+          <button type="button" data-status="pendentes">Pendentes</button>
+          <button type="button" data-status="andamento">Em andamento</button>
+          <button type="button" data-status="concluidas">Concluídas</button>
+        </div>
+        <select id="filtro-prioridade" aria-label="Filtrar por prioridade">
+          <option value="todas">Todas as prioridades</option>
+          <option value="alta">Prioridade alta</option>
+          <option value="media">Prioridade média</option>
+          <option value="baixa">Prioridade baixa</option>
+        </select>
+        <select id="ordem" aria-label="Ordenar por">
+          <option value="prazo">Ordenar por prazo</option>
+          <option value="prioridade">Ordenar por prioridade</option>
+          <option value="recentes">Mais recentes primeiro</option>
+          <option value="titulo">Ordem alfabética</option>
+        </select>
+        <div class="segmentado" id="modo" role="group" aria-label="Modo de visualização">
+          <button type="button" data-modo="lista" data-icone="lista">Lista</button>
+          <button type="button" data-modo="quadro" data-icone="quadro">Quadro</button>
+          <button type="button" data-modo="calendario" data-icone="calendario">Calendário</button>
+        </div>
+      </div>
+
+      <div class="conteudo" id="conteudo"></div>
+    </main>
+  </div>
+
+  <button type="button" class="fab" id="fab" aria-label="Nova tarefa" data-icone="mais"></button>
+
+  <dialog id="modal-tarefa" aria-labelledby="titulo-modal-tarefa">
+    <form id="form-tarefa" novalidate>
+      <header class="cabecalho-modal">
+        <h2 id="titulo-modal-tarefa">Nova tarefa</h2>
+        <button type="button" class="botao-icone" data-fechar aria-label="Fechar" data-icone="fechar"></button>
+      </header>
+
+      <div class="corpo-modal">
+        <label class="campo">
+          <span class="rotulo">Título *</span>
+          <input id="campo-titulo" type="text" maxlength="100" placeholder="Ex.: Entregar o relatório do A3" autocomplete="off">
+        </label>
+
+        <label class="campo">
+          <span class="rotulo">Descrição</span>
+          <textarea id="campo-descricao" rows="3" maxlength="500" placeholder="Detalhes (opcional)"></textarea>
+        </label>
+
+        <div class="campo">
+          <span class="rotulo" id="rotulo-prazo">Prazo</span>
+          <div class="linha-prazo">
+            <input id="campo-prazo" type="date" aria-labelledby="rotulo-prazo">
+            <div class="atalhos" id="atalhos-prazo">
+              <button type="button" data-dias="0">Hoje</button>
+              <button type="button" data-dias="1">Amanhã</button>
+              <button type="button" data-dias="7">Em 1 semana</button>
+              <button type="button" data-dias="">Sem prazo</button>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="campo">
+          <legend class="rotulo">Prioridade</legend>
+          <div class="opcoes">
+            <label class="opcao prioridade-baixa"><input type="radio" name="prioridade" value="baixa"><span data-icone="bandeira">Baixa</span></label>
+            <label class="opcao prioridade-media"><input type="radio" name="prioridade" value="media"><span data-icone="bandeira">Média</span></label>
+            <label class="opcao prioridade-alta"><input type="radio" name="prioridade" value="alta"><span data-icone="bandeira">Alta</span></label>
+          </div>
+        </fieldset>
+
+        <div class="linha">
+          <label class="campo">
+            <span class="rotulo">Categoria</span>
+            <select id="campo-categoria"></select>
+          </label>
+          <label class="campo">
+            <span class="rotulo">Status</span>
+            <select id="campo-status">
+              <option value="a_fazer">A fazer</option>
+              <option value="andamento">Em andamento</option>
+              <option value="concluida">Concluída</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="campo">
+          <span class="rotulo">Subtarefas <span class="texto-fraco" id="progresso-rascunho"></span></span>
+          <ul class="editor-subtarefas" id="lista-rascunho"></ul>
+          <div class="nova-subtarefa">
+            <input id="campo-subtarefa" type="text" maxlength="120" placeholder="Adicionar subtarefa e apertar Enter" aria-label="Nova subtarefa" autocomplete="off">
+            <button type="button" class="botao secundario" id="botao-subtarefa">Adicionar</button>
+          </div>
+        </div>
+
+        <p class="erro" id="erro-tarefa" role="alert" hidden></p>
+      </div>
+
+      <footer class="rodape-modal">
+        <button type="button" class="botao fantasma perigo" id="botao-excluir-modal" data-icone="lixeira">Excluir</button>
+        <span class="espaco"></span>
+        <button type="button" class="botao secundario" data-fechar>Cancelar</button>
+        <button type="submit" class="botao primario">Salvar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-categoria" aria-labelledby="titulo-modal-categoria">
+    <form id="form-categoria" novalidate>
+      <header class="cabecalho-modal">
+        <h2 id="titulo-modal-categoria">Nova categoria</h2>
+        <button type="button" class="botao-icone" data-fechar aria-label="Fechar" data-icone="fechar"></button>
+      </header>
+      <div class="corpo-modal">
+        <label class="campo">
+          <span class="rotulo">Nome</span>
+          <input id="campo-nome-categoria" type="text" maxlength="30" placeholder="Ex.: Saúde" autocomplete="off">
+        </label>
+        <fieldset class="campo">
+          <legend class="rotulo">Cor</legend>
+          <div class="cores" id="opcoes-cor"></div>
+        </fieldset>
+        <p class="erro" id="erro-categoria" role="alert" hidden></p>
+      </div>
+      <footer class="rodape-modal">
+        <span class="espaco"></span>
+        <button type="button" class="botao secundario" data-fechar>Cancelar</button>
+        <button type="submit" class="botao primario">Criar categoria</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="modal-fundo" aria-labelledby="titulo-modal-fundo">
+    <div class="janela-fundo">
+      <header class="cabecalho-modal">
+        <h2 id="titulo-modal-fundo">Fundo do app</h2>
+        <button type="button" class="botao-icone" data-fechar aria-label="Fechar" data-icone="fechar"></button>
+      </header>
+      <div class="corpo-modal">
+        <p class="rotulo">Escolha um fundo</p>
+        <div class="galeria-fundos" id="galeria-fundos" role="group" aria-label="Fundos prontos"></div>
+
+        <div class="fontes-fundo">
+          <label class="botao secundario escolher-cor">
+            <input type="color" id="campo-cor-fundo" value="#7c3aed" aria-label="Cor sólida">
+            Cor sólida
+          </label>
+          <label class="botao secundario" data-icone="imagem">
+            Sua imagem
+            <input type="file" id="campo-imagem-fundo" accept="image/*" hidden>
+          </label>
+        </div>
+
+        <label class="campo">
+          <span class="rotulo">Intensidade do fundo <span class="texto-fraco" id="valor-intensidade"></span></span>
+          <input type="range" id="campo-intensidade" min="10" max="100" step="5">
+          <span class="dica-fundo">Quanto menor, mais suave o fundo fica atrás das tarefas.</span>
+        </label>
+        <p class="erro" id="erro-fundo" role="alert" hidden></p>
+      </div>
+      <footer class="rodape-modal">
+        <button type="button" class="botao fantasma" id="botao-remover-fundo">Voltar ao padrão</button>
+        <span class="espaco"></span>
+        <button type="button" class="botao primario" data-fechar>Pronto</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog id="modal-foco" class="foco" aria-labelledby="foco-titulo">
+    <div class="foco-conteudo">
+      <button type="button" class="botao-icone foco-fechar" id="foco-fechar" aria-label="Sair do modo foco" title="Sair do modo foco (Esc)" data-icone="fechar"></button>
+      <p class="foco-rotulo" data-icone="cronometro">Modo foco</p>
+      <h2 id="foco-titulo"></h2>
+      <div class="anel-foco">
+        <svg viewBox="0 0 240 240" aria-hidden="true">
+          <defs>
+            <linearGradient id="gradiente-foco" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="50%" stop-color="#a855f7"/>
+              <stop offset="100%" stop-color="#ec4899"/>
+            </linearGradient>
+          </defs>
+          <circle class="trilho" cx="120" cy="120" r="108"/>
+          <circle class="arco" id="foco-arco" cx="120" cy="120" r="108"/>
+        </svg>
+        <div class="tempo-foco">
+          <strong id="foco-tempo" role="timer">25:00</strong>
+          <span id="foco-estado">Pronto pra começar</span>
+        </div>
+      </div>
+      <div class="segmentado escuro" id="foco-duracoes" role="group" aria-label="Duração">
+        <button type="button" data-minutos="15">15 min</button>
+        <button type="button" data-minutos="25">25 min</button>
+        <button type="button" data-minutos="50">50 min</button>
+      </div>
+      <div class="foco-acoes">
+        <button type="button" class="botao-redondo" id="foco-reiniciar" aria-label="Reiniciar" title="Reiniciar" data-icone="reiniciar"></button>
+        <button type="button" class="botao-redondo grande" id="foco-iniciar" aria-label="Iniciar"></button>
+        <button type="button" class="botao-redondo" id="foco-concluir" aria-label="Concluir a tarefa" title="Concluir a tarefa" data-icone="check"></button>
+      </div>
+      <p class="foco-total" id="foco-total"></p>
+    </div>
+  </dialog>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="js/tarefas.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+erDiagram
+    CATEGORIA |o--o{ TAREFA : classifica
+    TAREFA ||--o{ SUBTAREFA : possui
+    CATEGORIA {
+        string id PK
+        string nome UK
+        string cor
+    }
+    TAREFA {
+        string id PK
+        string titulo
+        string descricao
+        date prazo
+        string prioridade
+        string status
+        string categoria_id FK
+        datetime criada_em
+        datetime concluida_em
+        int minutos_foco
+    }
+    SUBTAREFA {
+        string id PK
+        string tarefa_id FK
+        string texto
+        boolean feita
+    }

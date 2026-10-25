@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor U as Usuário
+    participant I as Interface (app.js)
+    participant R as Repositório (tarefas.js)
+    participant S as localStorage
+    U->>I: marca a caixa de conclusão
+    I->>R: alternarConclusao(id)
+    R->>S: getItem("so-processo:dados")
+    S-->>R: JSON com tarefas e categorias
+    R->>R: buscar(id) e definirStatus("concluida")
+    R->>S: setItem("so-processo:dados", JSON)
+    R-->>I: tarefa atualizada
+    I->>I: renderizar() e atualizar painel
+    I-->>U: aviso "Tarefa concluída." com Desfazer

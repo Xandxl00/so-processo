@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> AFazer: cadastrar
+    AFazer --> EmAndamento: mover no quadro
+    EmAndamento --> AFazer: mover no quadro
+    AFazer --> Concluida: concluir
+    EmAndamento --> Concluida: concluir ou mover
+    Concluida --> AFazer: reabrir
+    Concluida --> EmAndamento: mover no quadro
+    AFazer --> [*]: excluir
+    EmAndamento --> [*]: excluir
+    Concluida --> [*]: excluir
+    note right of Concluida: concluidaEm recebe a data e hora<br>ao entrar e volta a null ao sair

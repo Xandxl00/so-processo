@@ -1,0 +1,10 @@
+{
+  "name": "so-processo",
+  "version": "1.0.0",
+  "description": "Aplicação simples para organização de tarefas diárias (Projeto A3).",
+  "private": true,
+  "scripts": {
+    "test": "node --test testes/tarefas.test.js",
+    "site": "node ferramentas/gerar-site.js"
+  }
+}

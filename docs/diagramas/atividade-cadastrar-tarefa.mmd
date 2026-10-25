@@ -1,0 +1,15 @@
+flowchart TD
+    A([Início]) --> B{Como cadastrar?}
+    B -- Adição rápida --> C[Digitar texto com comandos<br>e apertar Enter]
+    C --> D[Interpretar @prazo, !prioridade, #categoria]
+    B -- Formulário --> E[Abrir janela da tarefa<br>e preencher os campos]
+    D --> F{Título preenchido<br>e até 100 caracteres?}
+    E --> F
+    F -- Não --> G[Mostrar mensagem de erro]
+    G --> E
+    F -- Sim --> H{Prioridade, status, prazo<br>e categoria válidos?}
+    H -- Não --> G
+    H -- Sim --> I[Gerar id, criadaEm<br>e minutosFoco = 0]
+    I --> J[Gravar no localStorage]
+    J --> K[Redesenhar a tela e<br>mostrar Tarefa criada]
+    K --> L([Fim])

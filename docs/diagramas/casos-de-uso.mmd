@@ -1,0 +1,24 @@
+flowchart LR
+    U((Usuário))
+    subgraph SP[Sistema Só Processo]
+        UC01([UC01 Cadastrar tarefa])
+        UC02([UC02 Adição rápida])
+        UC03([UC03 Consultar tarefas])
+        UC04([UC04 Editar tarefa])
+        UC05([UC05 Excluir tarefa])
+        UC06([UC06 Concluir ou reabrir tarefa])
+        UC07([UC07 Mover tarefa no quadro])
+        UC08([UC08 Remarcar prazo no calendário])
+        UC09([UC09 Gerenciar categorias])
+        UC10([UC10 Marcar subtarefa])
+        UC11([UC11 Usar modo foco])
+        UC12([UC12 Exportar e importar backup])
+        UC13([UC13 Personalizar aparência])
+        VAL([Validar tarefa])
+    end
+    U --- UC01 & UC03 & UC04 & UC05 & UC06 & UC07
+    U --- UC08 & UC09 & UC10 & UC11 & UC12 & UC13
+    UC02 -. extend .-> UC01
+    UC01 -. include .-> VAL
+    UC04 -. include .-> VAL
+    UC12 -. include .-> VAL

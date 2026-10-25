@@ -1,0 +1,10 @@
+flowchart TB
+    subgraph Navegador
+        UI[Interface - index.html, style.css, app.js<br>telas, lista, quadro, calendário, janelas]
+        RN[Regras de negócio - tarefas.js<br>validar, filtrar, ordenar, resumir, repositório]
+        AR[(localStorage<br>so-processo:dados)]
+    end
+    T[Testes - testes/tarefas.test.js<br>armazenamento falso em memória]
+    UI -->|chama o repositório| RN
+    RN -->|getItem / setItem| AR
+    T -->|testa sem navegador| RN

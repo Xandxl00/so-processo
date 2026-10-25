@@ -1,0 +1,139 @@
+classDiagram
+    direction LR
+    class Tarefa {
+        +String id
+        +String titulo
+        +String descricao
+        +String prazo
+        +Prioridade prioridade
+        +Status status
+        +String categoriaId
+        +String criadaEm
+        +String concluidaEm
+        +Number minutosFoco
+    }
+    class Subtarefa {
+        +String id
+        +String texto
+        +Boolean feita
+    }
+    class Categoria {
+        +String id
+        +String nome
+        +Cor cor
+    }
+    class Dados {
+        +Tarefa[] tarefas
+        +Categoria[] categorias
+    }
+    class Prioridade {
+        <<enumeration>>
+        baixa
+        media
+        alta
+    }
+    class Status {
+        <<enumeration>>
+        a_fazer
+        andamento
+        concluida
+    }
+    class Cor {
+        <<enumeration>>
+        azul
+        roxo
+        verde
+        laranja
+        rosa
+        ciano
+        amarelo
+        cinza
+    }
+    class Armazenamento {
+        <<interface>>
+        +getItem(chave) String
+        +setItem(chave, valor) void
+    }
+    class Repositorio {
+        -Armazenamento armazenamento
+        +tarefas() Tarefa[]
+        +categorias() Categoria[]
+        +adicionar(dados) Tarefa
+        +editar(id, dados) Tarefa
+        +excluir(ids) Tarefa[]
+        +restaurar(tarefas) void
+        +alternarConclusao(id) Tarefa
+        +moverPara(id, status) Tarefa
+        +remarcar(id, prazo) Tarefa
+        +registrarFoco(id, minutos) Tarefa
+        +alternarSubtarefa(id, subtarefaId) Subtarefa
+        +adicionarCategoria(dados) Categoria
+        +excluirCategoria(id) void
+        +exportar() String
+        +importar(texto) Dados
+    }
+    class RegrasDeNegocio {
+        <<module tarefas.js>>
+        +validarTarefa(dados, categorias) Object
+        +validarCategoria(dados, existentes) Object
+        +consultarTarefas(lista, opcoes, hoje) Tarefa[]
+        +ordenarTarefas(lista, ordem) Tarefa[]
+        +resumirTarefas(lista, hoje) Resumo
+        +periodoDaTarefa(tarefa, hoje) String
+        +estaAtrasada(tarefa, hoje) Boolean
+        +interpretarAdicaoRapida(texto, categorias, hoje) Object
+        +criarRepositorio(armazenamento) Repositorio
+    }
+    class Resumo {
+        +Number total
+        +Number pendentes
+        +Number andamento
+        +Number atrasadas
+        +Number concluidas
+        +Number percentual
+    }
+    class Interface {
+        <<module app.js>>
+        -Object estado
+        +renderizar() void
+        +abrirModalTarefa(tarefa) void
+        +mover(id, status) void
+        +remarcar(id, dia) void
+        +abrirFoco(tarefa) void
+        +aplicarTema() void
+        +aplicarFundo() void
+    }
+    class SessaoFoco {
+        +String tarefaId
+        +Number minutos
+        +Number restante
+        +Boolean rodando
+    }
+    class Preferencias {
+        +String visao
+        +String ordem
+        +String modo
+        +String tema
+    }
+    class Fundo {
+        +String tipo
+        +String valor
+        +Number intensidade
+    }
+
+    Dados "1" *-- "0..*" Tarefa
+    Dados "1" *-- "0..*" Categoria
+    Tarefa "1" *-- "0..30" Subtarefa
+    Tarefa "0..*" --> "0..1" Categoria : categoriaId
+    Tarefa ..> Prioridade
+    Tarefa ..> Status
+    Categoria ..> Cor
+    Repositorio --> Armazenamento
+    Repositorio ..> Dados : carrega e grava
+    RegrasDeNegocio ..> Repositorio : cria
+    RegrasDeNegocio ..> Resumo : gera
+    Interface --> Repositorio
+    Interface ..> RegrasDeNegocio : usa
+    Interface *-- SessaoFoco
+    Interface ..> Preferencias : salva
+    Interface ..> Fundo : salva

@@ -1,0 +1,15 @@
+flowchart TD
+    A([Surge uma tarefa<br>trabalho, aula, casa]) --> B{Anota em algum lugar?}
+    B -- Não --> C[Confia na memória]
+    B -- Sim --> D[Anota no caderno, no celular<br>ou em mensagem pra si mesmo]
+    D --> E[Anotações espalhadas<br>em vários lugares]
+    C --> F{Lembra da tarefa<br>antes do prazo?}
+    E --> F
+    F -- Não --> G[Tarefa esquecida<br>ou prazo perdido]
+    F -- Sim --> H{Sabe o que é mais<br>urgente hoje?}
+    H -- Não --> I[Começa pela tarefa errada<br>e acumula atrasos]
+    H -- Sim --> J[Executa a tarefa]
+    I --> G
+    J --> K[Risca ou apaga a anotação<br>sem histórico do que foi feito]
+    G --> L([Retrabalho, estresse<br>e entregas atrasadas])
+    K --> M([Fim])
