@@ -36,7 +36,7 @@ Cada linha abaixo vira um cartão (issue) no quadro. Os responsáveis são uma s
 | T23 | Modo foco (Pomodoro) que soma minutos na tarefa (RF22) | 11. Versão final | Vitor | 2 | Concluído |
 | T24 | Testes automatizados das regras de negócio (38 testes) | 11. Versão final | Pedro | 2 | Concluído |
 | T25 | Layout responsivo e acessibilidade (RNF02, RNF06) | 11. Versão final | Vitor | 2 | Concluído |
-| T26 | Criar o repositório no GitHub e subir o código | Gestão (10.3) | Pedro | 2 | A fazer |
+| T26 | Criar o repositório no GitHub e subir o código | Gestão (10.3) | Pedro | 2 | Concluído |
 | T27 | Montar o quadro no GitHub Projects e enviar o link ao professor | Gestão (10.1 e 10.2) | Matheus | 2 | A fazer |
 | T28 | Site de apresentação e publicação do app | 11. Versão final | Vitor | 2 | Concluído |
 | T29 | Documentação completa (seguir o template do professor quando sair) | 10. Documentação | Matheus | 2 | Em desenvolvimento |

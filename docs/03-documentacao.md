@@ -13,7 +13,7 @@
 | **Nome** | Só Processo |
 | **Tipo** | Aplicação web (organização de tarefas) |
 | **Unidade curricular** | Projeto e Engenharia de Software |
-| **Repositório** | _[link do GitHub]_ |
+| **Repositório** | https://github.com/Xandxl00/so-processo |
 | **Quadro de tarefas** | _[link do GitHub Projects]_ |
 | **Aplicação publicada** | _[endereço do site, se publicado]_ |
 
@@ -689,7 +689,7 @@ As regras de negócio são verificadas por **38 testes automatizados** (`npm tes
 ## 18. Gestão do projeto
 
 - **Backlog e quadro:** GitHub Projects, colunas Backlog → A fazer → Em desenvolvimento → Em teste → Concluído. Lista de tarefas em [`04-backlog.md`](04-backlog.md). Link: _[preencher]_
-- **Repositório:** GitHub. Link: _[preencher]_
+- **Repositório:** https://github.com/Xandxl00/so-processo
 
 ## 19. Referências
 
