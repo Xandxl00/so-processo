@@ -80,6 +80,8 @@ Login de usuários, notificações automáticas e integração com outros sistem
 
 Os diagramas também estão em imagem (PNG) em [docs/diagramas/](docs/diagramas/), prontos para colar nos templates.
 
+**Versões em PDF** (em [docs/pdf/](docs/pdf/)): [Pré-projeto](docs/pdf/Pre-projeto%20-%20So%20Processo.pdf) · [Canvas](docs/pdf/Canvas%20-%20So%20Processo.pdf) · [Documentação](docs/pdf/Documentacao%20-%20So%20Processo.pdf) · [Backlog](docs/pdf/Backlog%20-%20So%20Processo.pdf) · [Roteiro do pitch](docs/pdf/Roteiro%20do%20Pitch%20-%20So%20Processo.pdf)
+
 ## Estrutura do projeto
 
 ```
